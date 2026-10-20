@@ -58,12 +58,14 @@ deploy-latest: ## deploy current tag as latest
 	docker push $(REPO)/${APP_NAME}:latest	
 
 vendor: ## go vendor and tidy
-	echo "tidy + vendor"
+## update avatar modules
+# go get -u ./...
+	go get -u github.com/binuud/avatar-conscious
 	go mod tidy
 	go mod vendor	
 
 run: ## Run server, UI accessible in http://localhost:9080/
-	go run cmd/avatar/main.go -v -grpc_port 9090 -http_port 9080
+	./scripts/runAvatar.sh
 
 test: ## Run tests
 	go test -v ./pkg/...	

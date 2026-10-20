@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"embed"
 	"flag"
 	"fmt"
+	"io/fs"
 	"log"
 	"net"
 	"net/http"
@@ -17,6 +19,7 @@ import (
 	llmProxyServer "github.com/binuud/conscious/pkg/servers/llmProxyServer"
 	"github.com/binuud/conscious/pkg/servers/staticFileServer"
 	"github.com/binuud/conscious/pkg/servers/systemMetricsServer"
+	spahttpserver "github.com/binuud/watchdog/pkg/spaHttpServer"
 
 	"github.com/binuud/conscious/pkg/utils"
 
@@ -30,14 +33,44 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
+//go:embed ui/*
+var embeddedFiles embed.FS
+
+type spaFileSystem struct {
+	baseFS    fs.FS
+	indexPath string
+}
+
 var (
 	server_grpc_port = flag.Int("grpc_port", 9090, "The Brain Backend Server GRPC port, no token required unsecured")
 	server_http_port = flag.Int("http_port", 9080, "The Brain Backend Server HTTP port, no token required unsecured")
 )
 
-func serveStaticPaths() *http.ServeMux {
+func serveUI() *http.ServeMux {
+
+	// Strip the "ui" prefix from the embedded paths
+	// so we don't have to include "/ui/" in your URLs.
+	uiFS, err := fs.Sub(embeddedFiles, "ui")
+	if err != nil {
+		panic(err)
+	}
+
+	// Initialize our SPA handler wrapper
+	handler := spahttpserver.SpaFileSystem{
+		BaseFS:    uiFS,
+		IndexPath: "index.html",
+	}
 
 	httpMux := http.NewServeMux()
+
+	httpMux.Handle("/", handler)
+
+	logrus.Infof("Server directory %s -> %s", "/", ".")
+
+	return httpMux
+}
+
+func serveStaticPaths(httpMux *http.ServeMux) *http.ServeMux {
 
 	// OPEN_API_FILES_PATH is the folder where the swagger files for apps are stored
 	SERVABLE_DIRECTORY := utils.GetEnv("SERVABLE_DIRECTORY", "/dataVolume/gen")
@@ -97,7 +130,8 @@ func runHtppServer() {
 		log.Fatalln(err)
 	}
 
-	httpMux := serveStaticPaths()
+	httpMux := serveUI()
+	serveStaticPaths(httpMux)
 
 	// mqttServer.InitMQTT()
 	// httpMux.HandleFunc("/ws", mqttServer.WebsocketHandler)
