@@ -18,6 +18,10 @@ go install github.com/binuud/avatar/cmd/avatar@latest
 http://localhost:9080
 ```
 
+## Metrics
+
+The ui displays system metrics for CPU, RAM and GPU usage. The GPU memory, is the memory block allocated to GPU.
+
 ### Docker Image
 
 ```
@@ -56,3 +60,7 @@ Avatar is a collection of the below projects
 | Development UI  | MIT         | https://github.com/binuud/avatar-dev-ui                   |
 | Communication   | MIT         | https://github.com/binuud/avatar-communication-plane      |
 | Physical Plane  | MIT         | https://github.com/binuud/avatar-physical-plane           |
+
+
+## Credits
+
