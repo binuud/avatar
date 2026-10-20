@@ -2,8 +2,8 @@ github.com/Azure/azure-sdk-for-go/sdk/azcore v1.23.2 h1:utpeoEeZjd+A8J41zvoLsOOr
 github.com/Azure/azure-sdk-for-go/sdk/azcore v1.23.2/go.mod h1:iptorS+VYKFL2N6PnebpS91dubG35eAOEERnT4PJbQU=
 github.com/Azure/azure-sdk-for-go/sdk/internal v1.12.0 h1:fhqpLE3UEXi9lPaBRpQ6XuRW0nU7hgg4zlmZZa+a9q4=
 github.com/Azure/azure-sdk-for-go/sdk/internal v1.12.0/go.mod h1:7dCRMLwisfRH3dBupKeNCioWYUZ4SS09Z14H+7i8ZoY=
-github.com/binuud/conscious v0.0.0-20261020063849-108e663c6e9b h1:c4nDW+Lx4rLFj7RN08PPZgHzWYPYNNZSmgVOW9P80h4=
-github.com/binuud/conscious v0.0.0-20261020063849-108e663c6e9b/go.mod h1:9luZlh+qzq6LsmXgsWI0cZ/EypgziPVpoN/b11oWrCI=
+github.com/binuud/avatar-conscious v0.0.0-20261020085521-b04ef84075eb h1:KLTnhnejgPOIcFu9j4dsIx0qs+xvQW1qr6IKh+1BnCU=
+github.com/binuud/avatar-conscious v0.0.0-20261020085521-b04ef84075eb/go.mod h1:sUCLOgTDSe4K0DO3g6+r4jjgZspaWxhxJpz577TULTA=
 github.com/binuud/watchdog v0.1.46 h1:XyDVZarw7guwoy8FPjZfluyiKQgvnH0H5CJYkEzR5CA=
 github.com/binuud/watchdog v0.1.46/go.mod h1:IMRhp93ZnLt9dIVkH5nXN5WHpJ3zEFoVM0hnfiXxgns=
 github.com/coder/websocket v1.8.15 h1:6B2JPeOGlpff2Uz6vOEH1Vzpi0iUz20A+lPVhPHtNUA=
