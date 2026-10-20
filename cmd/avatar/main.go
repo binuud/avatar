@@ -12,16 +12,15 @@ import (
 	"os"
 	"strings"
 
-	pbAvatar "github.com/binuud/conscious/gen/go/v1/avatar"
-	pbConscious "github.com/binuud/conscious/gen/go/v1/conscious"
-	"github.com/binuud/conscious/pkg/servers/avatarStoreServer"
-	"github.com/binuud/conscious/pkg/servers/consciousServer"
-	llmProxyServer "github.com/binuud/conscious/pkg/servers/llmProxyServer"
-	"github.com/binuud/conscious/pkg/servers/staticFileServer"
-	"github.com/binuud/conscious/pkg/servers/systemMetricsServer"
+	pbAvatar "github.com/binuud/avatar-conscious/gen/go/v1/avatar"
+	pbConscious "github.com/binuud/avatar-conscious/gen/go/v1/conscious"
+	"github.com/binuud/avatar-conscious/pkg/servers/avatarStoreServer"
+	"github.com/binuud/avatar-conscious/pkg/servers/consciousServer"
+	llmProxyServer "github.com/binuud/avatar-conscious/pkg/servers/llmProxyServer"
+	"github.com/binuud/avatar-conscious/pkg/servers/staticFileServer"
+	"github.com/binuud/avatar-conscious/pkg/servers/systemMetricsServer"
+	"github.com/binuud/avatar-conscious/pkg/utils"
 	spahttpserver "github.com/binuud/watchdog/pkg/spaHttpServer"
-
-	"github.com/binuud/conscious/pkg/utils"
 
 	// mqttServer "github.com/dronasys-com/brain-nodes/pkg/servers/mqttBridge"
 
@@ -45,6 +44,10 @@ var (
 	server_grpc_port = flag.Int("grpc_port", 9090, "The Brain Backend Server GRPC port, no token required unsecured")
 	server_http_port = flag.Int("http_port", 9080, "The Brain Backend Server HTTP port, no token required unsecured")
 )
+
+func bootstrap() {
+	utils.Bootstrap()
+}
 
 func serveUI() *http.ServeMux {
 
@@ -194,6 +197,8 @@ func runGRPCServer() {
 }
 
 func main() {
+
+	bootstrap()
 	logrus.Println("Welcome to life")
 
 	LLM_HOST := utils.GetEnv("LLM_HOST", "http://localhost:12434")
