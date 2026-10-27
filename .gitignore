@@ -32,8 +32,15 @@ go.work.sum
 # .idea/
 # .vscode/
 
+
 outdir/*
-dataVolume/memories/*
+dataVolume/avatarStore/life-*
+dataVolume/avatar/*
+dataVolume/configs/*
 dataVolume/gen/*
+dataVolume/memories/*
 dataVolume/sampleImages/*
+dataVolume/static/*
 dataVolume/uploads/*
+
+dist/*
