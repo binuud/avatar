@@ -30,14 +30,18 @@ export $(shell sed 's/=.*//' $(cnf))
 # HELP
 # This will output the help for each task
 # thanks to https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
-.PHONY: help
+
+# we have a directory named vendor
+# force make to run target vendor
+.PHONY: help vendor
+
 help: ## This help.
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 .DEFAULT_GOAL := help
 
 build: build-ui ## Build the avatar server binary, with embedded static html files
-	go build cmd/avatar/main.go
+	go build -o dist/avatar cmd/avatar/main.go 
 
 build-docker: ## Build docker image
 	docker build --no-cache  --build-arg BUILD_VER=$(BUILD_VER) $(MULTI_PLATFORM_DOCKER) -t $(REPO)/$(APP_NAME) -f deployment/Dockerfile .
@@ -58,14 +62,16 @@ deploy-latest: ## deploy current tag as latest
 	docker push $(REPO)/${APP_NAME}:latest	
 
 vendor: ## go vendor and tidy
-## update avatar modules
-# go get -u ./...
+# 	go get -u ./...
 	go get -u github.com/binuud/avatar-conscious
 	go mod tidy
 	go mod vendor	
 
 run: ## Run server, UI accessible in http://localhost:9080/
 	./scripts/runAvatar.sh
+
+test-dist-binary: ## Run the distribution binary, UI accessible in http://localhost:9080/
+	./scripts/runAvatarBinary.sh
 
 test: ## Run tests
 	go test -v ./pkg/...	
@@ -78,5 +84,11 @@ release: ## for releasing the package
 	goreleaser release --clean
 
 release-check: ## run release build, but do not publish
+	rm -rf dist/*
 	goreleaser check
 	goreleaser release --snapshot --clean	
+#	goreleaser release --skip=publish ---clean	
+
+
+run-mock-server: ## run the mock server, mocks http get, post requests, without an actual server
+	go run github.com/smeshkov/gomock/cmd/app@latest -mock ./dataVolume/mockServer/mock.json	

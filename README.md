@@ -1,5 +1,7 @@
 # avatar
 
+[Documentation](https://binuud.com/docs/avatar)
+
 ai life form, physical robot with integrated conscious, memory and communication
 
 Project status - open for alpha users

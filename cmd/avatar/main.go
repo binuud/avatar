@@ -7,18 +7,17 @@ import (
 	"fmt"
 	"io/fs"
 	"log"
-	"net"
 	"net/http"
 	"os"
 	"strings"
 
 	pbAvatar "github.com/binuud/avatar-conscious/gen/go/v1/avatar"
 	pbConscious "github.com/binuud/avatar-conscious/gen/go/v1/conscious"
-	"github.com/binuud/avatar-conscious/pkg/servers/avatarStoreServer"
-	"github.com/binuud/avatar-conscious/pkg/servers/consciousServer"
+	pbSettings "github.com/binuud/avatar-conscious/gen/go/v1/settings"
+	"github.com/binuud/avatar-conscious/pkg/bootstrap"
+	"github.com/binuud/avatar-conscious/pkg/servers/avatarServer"
 	llmProxyServer "github.com/binuud/avatar-conscious/pkg/servers/llmProxyServer"
 	"github.com/binuud/avatar-conscious/pkg/servers/staticFileServer"
-	"github.com/binuud/avatar-conscious/pkg/servers/systemMetricsServer"
 	"github.com/binuud/avatar-conscious/pkg/utils"
 	spahttpserver "github.com/binuud/watchdog/pkg/spaHttpServer"
 
@@ -29,24 +28,19 @@ import (
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"google.golang.org/grpc/reflection"
 )
 
 //go:embed ui/*
 var embeddedFiles embed.FS
-
-type spaFileSystem struct {
-	baseFS    fs.FS
-	indexPath string
-}
 
 var (
 	server_grpc_port = flag.Int("grpc_port", 9090, "The Brain Backend Server GRPC port, no token required unsecured")
 	server_http_port = flag.Int("http_port", 9080, "The Brain Backend Server HTTP port, no token required unsecured")
 )
 
-func bootstrap() {
-	utils.Bootstrap()
+type spaFileSystem struct {
+	baseFS    fs.FS
+	indexPath string
 }
 
 func serveUI() *http.ServeMux {
@@ -76,10 +70,10 @@ func serveUI() *http.ServeMux {
 func serveStaticPaths(httpMux *http.ServeMux) *http.ServeMux {
 
 	// OPEN_API_FILES_PATH is the folder where the swagger files for apps are stored
-	SERVABLE_DIRECTORY := utils.GetEnv("SERVABLE_DIRECTORY", "/dataVolume/gen")
+	SERVABLE_DIRECTORY := utils.GetEnv("SERVABLE_DIRECTORY", "/dataVolume/static")
 
-	if !strings.Contains(SERVABLE_DIRECTORY, "/dataVolume/gen") {
-		logrus.Panic("Protection fail, only directory having /dataVolume/gen can be served")
+	if !strings.Contains(SERVABLE_DIRECTORY, "/dataVolume/static") {
+		logrus.Panic("Protection fail, only directory having /dataVolume/static can be served")
 	}
 
 	SERVABLE_UI_DIRECTORY := os.Getenv("SERVABLE_UI_DIRECTORY")
@@ -127,8 +121,20 @@ func runHtppServer() {
 		log.Fatalln(err)
 	}
 
+	// avatar server
+	err = pbAvatar.RegisterAvatarServiceHandler(ctx, gwMux, conn)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	// systemMetricsServer
 	err = pbConscious.RegisterMetricsHandler(ctx, gwMux, conn)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	// settings server
+	err = pbSettings.RegisterSettingsHandler(ctx, gwMux, conn)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -136,18 +142,24 @@ func runHtppServer() {
 	httpMux := serveUI()
 	serveStaticPaths(httpMux)
 
+	// for bidirectional stream on avatar live server
+	httpMux.HandleFunc("/api/avatar/ws", avatarServer.WebsocketHandler)
 	// mqttServer.InitMQTT()
-	// httpMux.HandleFunc("/ws", mqttServer.WebsocketHandler)
 
 	// handle llm proxt on path /llmHandler
 	httpMux.Handle("/llmHandler/", http.StripPrefix("/llmHandler", llmProxyServer.GetLlmProxyHandler()))
 	logrus.Infof("Server directory %s -> %s", "/llmHandler/", "llm proxy")
 
+	// handle websocket
+	// httpMux.HandleFunc("/ws", mqttServer.WebsocketHandler)
+
 	// link the concious gateway server to httpmux
 	httpMux.Handle("/api/", http.StripPrefix("/api", gwMux))
+	logrus.Infof("Server directory %s -> %s", "/api/avatar/ws", "avatar control websocket")
 	logrus.Infof("Server directory %s -> %s", "/api/", "conscious server")
 	logrus.Infof("Server directory %s -> %s", "/api/", "metrics server")
 	logrus.Infof("Server directory %s -> %s", "/api/", "avatar store server")
+	logrus.Infof("Server directory %s -> %s", "/api/", "settings server")
 
 	// Configure CORS options as needed
 	corsEnabledMux := cors.New(cors.Options{
@@ -155,7 +167,7 @@ func runHtppServer() {
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Authorization", "Content-Type"}, // []string{"Authorization", "Content-Type", "Accept"},
 		AllowCredentials: true,
-		Debug:            true, // Set to true to trace CORS errors in console
+		Debug:            false, // Set to true to trace CORS errors in console
 	})
 
 	corsEnabledHandler := corsEnabledMux.Handler(httpMux)
@@ -170,42 +182,15 @@ func runHtppServer() {
 	log.Fatalln(gwServer.ListenAndServe())
 }
 
-func runGRPCServer() {
-
-	insecureConn, err := net.Listen("tcp", fmt.Sprintf(":%d", *server_grpc_port))
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-	}
-
-	insecureServer := grpc.NewServer()
-
-	// GRPC Conscious Server
-	pbConscious.RegisterConsciousServer(insecureServer, consciousServer.NewGrpcConsciousServer())
-
-	// GRPC Avatar Store Server
-	pbAvatar.RegisterAvatarStoreServiceServer(insecureServer, avatarStoreServer.NewAvatarStoreGrpcServer())
-
-	// GRPC SystemMetrics Server
-	pbConscious.RegisterMetricsServer(insecureServer, systemMetricsServer.NewGrpcSystemMetricsServer())
-
-	// Register reflection service on gRPC server.
-	reflection.Register(insecureServer)
-
-	logrus.Infof("GRPC server starting  :(%d)", *server_grpc_port)
-	logrus.Fatalln(insecureServer.Serve(insecureConn))
-
-}
-
 func main() {
-
-	bootstrap()
 	logrus.Println("Welcome to life")
+	bootstrap.Bootstrap()
 
 	LLM_HOST := utils.GetEnv("LLM_HOST", "http://localhost:12434")
 
 	logrus.Printf("LLM Endpoint %v", LLM_HOST)
 	go func() {
-		runGRPCServer()
+		bootstrap.Bootstrap_GRPC_Services(*server_grpc_port)
 	}()
 
 	runHtppServer()
