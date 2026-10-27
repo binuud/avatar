@@ -15,12 +15,13 @@ version: 2
 
 project_name: avatar
 
-before:
-  hooks:
-    # You may remove this if you don't use go modules.
-    - go mod tidy
-    # you may remove this if you don't need go generate
-    # - go generate ./...
+# before:
+#   hooks:
+#     # You may remove this if you don't use go modules.
+#     - go mod tidy
+#     - go mod vendor  
+#     # you may remove this if you don't need go generate
+#     # - go generate ./...
   
 builds:
   - id: "avatar"
@@ -35,6 +36,9 @@ builds:
     goarch:
       - amd64
       - arm64
+    ignore:
+      - goos: darwin
+        goarch: amd64   
 
 archives:
   - formats: [tar.gz]
@@ -50,9 +54,9 @@ archives:
 checksum:
   name_template: 'checksums.txt'
 
-changelog:
-  sort: asc
-  filters:
-    exclude:
-      - "^docs:"
-      - "^test:"
+# changelog:
+#   sort: asc
+#   filters:
+#     exclude:
+#       - "^docs:"
+#       - "^test:"
