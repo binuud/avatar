@@ -38,6 +38,12 @@ var (
 	server_http_port = flag.Int("http_port", 9080, "The Brain Backend Server HTTP port, no token required unsecured")
 )
 
+var (
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
+)
+
 type spaFileSystem struct {
 	baseFS    fs.FS
 	indexPath string
@@ -184,6 +190,7 @@ func runHtppServer() {
 
 func main() {
 	logrus.Println("Welcome to life")
+	logrus.Printf("My App %s, commit %s, built at %s", version, commit, date)
 	bootstrap.Bootstrap()
 
 	LLM_HOST := utils.GetEnv("LLM_HOST", "http://localhost:12434")

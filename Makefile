@@ -89,6 +89,5 @@ release-check: ## run release build, but do not publish
 	goreleaser release --snapshot --clean	
 #	goreleaser release --skip=publish ---clean	
 
-
 run-mock-server: ## run the mock server, mocks http get, post requests, without an actual server
 	go run github.com/smeshkov/gomock/cmd/app@latest -mock ./mockServer/mock.json	
