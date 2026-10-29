@@ -91,4 +91,4 @@ release-check: ## run release build, but do not publish
 
 
 run-mock-server: ## run the mock server, mocks http get, post requests, without an actual server
-	go run github.com/smeshkov/gomock/cmd/app@latest -mock ./dataVolume/mockServer/mock.json	
+	go run github.com/smeshkov/gomock/cmd/app@latest -mock ./mockServer/mock.json	

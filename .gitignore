@@ -32,10 +32,11 @@ go.work.sum
 # .idea/
 # .vscode/
 
+.DS_Store
 
 outdir/*
+dataVolume/avatar/life-*
 dataVolume/avatarStore/life-*
-dataVolume/avatar/*
 dataVolume/configs/*
 dataVolume/gen/*
 dataVolume/memories/*
@@ -43,4 +44,4 @@ dataVolume/sampleImages/*
 dataVolume/static/*
 dataVolume/uploads/*
 
-dist/*
+dist/

@@ -3,7 +3,7 @@ module github.com/binuud/avatar
 go 1.27.2
 
 require (
-	github.com/binuud/avatar-conscious v0.0.0-20261027151535-50e5175fcfe1
+	github.com/binuud/avatar-conscious v0.0.0-20261029091206-e4e168f38468
 	github.com/binuud/watchdog v0.1.46
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.32.0
 	github.com/rs/cors v1.11.1

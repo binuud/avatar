@@ -12,8 +12,8 @@ github.com/Azure/azure-sdk-for-go/sdk/internal v1.12.0 h1:fhqpLE3UEXi9lPaBRpQ6Xu
 github.com/Azure/azure-sdk-for-go/sdk/internal v1.12.0/go.mod h1:7dCRMLwisfRH3dBupKeNCioWYUZ4SS09Z14H+7i8ZoY=
 github.com/antlr4-go/antlr/v4 v4.13.0 h1:lxCg3LAv+EUK6t1i0y1V6/SLeUi0eKEKdhQAlS8TVTI=
 github.com/antlr4-go/antlr/v4 v4.13.0/go.mod h1:pfChB/xh/Unjila75QW7+VU4TSnWnnk9UTnmpPaOR2g=
-github.com/binuud/avatar-conscious v0.0.0-20261027151535-50e5175fcfe1 h1:Ra6Oh2ymN2WWYYfWDrN3ufHTNz3EJT+yeQAqM/Evz9c=
-github.com/binuud/avatar-conscious v0.0.0-20261027151535-50e5175fcfe1/go.mod h1:DLgZ6A0vXPb1jhLgytbRef5hDOvlcUy5yA7TY3iBzKI=
+github.com/binuud/avatar-conscious v0.0.0-20261029091206-e4e168f38468 h1:E+OZT2NQqmdv/C4Umz4OG5rTKxox2QYdT6IlT5FqYVs=
+github.com/binuud/avatar-conscious v0.0.0-20261029091206-e4e168f38468/go.mod h1:DLgZ6A0vXPb1jhLgytbRef5hDOvlcUy5yA7TY3iBzKI=
 github.com/binuud/watchdog v0.1.46 h1:XyDVZarw7guwoy8FPjZfluyiKQgvnH0H5CJYkEzR5CA=
 github.com/binuud/watchdog v0.1.46/go.mod h1:IMRhp93ZnLt9dIVkH5nXN5WHpJ3zEFoVM0hnfiXxgns=
 github.com/coder/websocket v1.8.15 h1:6B2JPeOGlpff2Uz6vOEH1Vzpi0iUz20A+lPVhPHtNUA=
