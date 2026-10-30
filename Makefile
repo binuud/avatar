@@ -13,8 +13,8 @@ GITHUB_TOKEN=""
 REPO=binuud
 APP_NAME ?= avatar
 
-BUILD_VER ?= v0.1.0
-DOCKER_HUB_TAG ?= v0.1.0
+BUILD_VER ?= v0.1.1
+DOCKER_HUB_TAG ?= v0.1.1
 
 GOLANG_IMAGE=golang:1.27.2
 
