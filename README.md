@@ -81,6 +81,7 @@ git clone https://github.com/binuud/avatar.git
 cd avatar
 make vendor
 make build
+make run
 ```
 (Tested and working on version 0.1.0)
 
