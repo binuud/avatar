@@ -22,7 +22,11 @@ project_name: avatar
 #     - go mod vendor  
 #     # you may remove this if you don't need go generate
 #     # - go generate ./...
-  
+
+release:
+  preflight:
+    fail_on_error: true
+      
 builds:
   - id: "avatar"
     main: ./cmd/avatar/main.go

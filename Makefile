@@ -83,7 +83,11 @@ release: ## for releasing the package
 ## comments for reference
 # git tag -a v0.1.0 -m "Release COMMENT"
 # git push origin [version]
-# export GITHUB_TOKEN="YOUR_GH_TOKEN"
+# delete:packages, project, repo, workflow, write:packages
+# export GITHUB_TOKEN="YOUR_GH_TOKEN" make release
+	ifndef GITHUB_TOKEN
+		$(error GITHUB_TOKEN is undefined)
+	endif
 	goreleaser release --clean
 
 release-check: ## run release build, but do not publish
