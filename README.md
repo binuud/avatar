@@ -36,7 +36,7 @@ docker pull binuud/avatar:latest
 
 ```bash
 mkdir dataVolume
-docker run --rm -it -v ./dataVolume:/dataVolume \
+docker run --rm  -v ./dataVolume:/dataVolume \
   -e FILE_STORE_PATH=/dataVolume \
   -p 9090:9090 -p 9080:9080 binuud/avatar:latest
 ```
