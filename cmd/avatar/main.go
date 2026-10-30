@@ -44,10 +44,13 @@ var (
 	date    = "unknown"
 )
 
-type spaFileSystem struct {
-	baseFS    fs.FS
-	indexPath string
-}
+// type spaFileSystem struct {
+// 	baseFS    fs.FS
+// 	indexPath string
+// }
+
+// to know that the binary is running within a docker container
+var buildEnv = "local" // "local" - for normal builds || "docker" - for docker builds
 
 func serveUI() *http.ServeMux {
 
@@ -191,11 +194,8 @@ func runHtppServer() {
 func main() {
 	logrus.Println("Welcome to life")
 	logrus.Printf("My App %s, commit %s, built at %s", version, commit, date)
-	bootstrap.Bootstrap()
+	bootstrap.Bootstrap(buildEnv)
 
-	LLM_HOST := utils.GetEnv("LLM_HOST", "http://localhost:12434")
-
-	logrus.Printf("LLM Endpoint %v", LLM_HOST)
 	go func() {
 		bootstrap.Bootstrap_GRPC_Services(*server_grpc_port)
 	}()

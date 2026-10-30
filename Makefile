@@ -13,8 +13,8 @@ GITHUB_TOKEN=""
 REPO=binuud
 APP_NAME ?= avatar
 
-BUILD_VER ?= v0.0.1
-DOCKER_HUB_TAG ?= v0.0.1
+BUILD_VER ?= v0.1.1
+DOCKER_HUB_TAG ?= v0.1.1
 
 GOLANG_IMAGE=golang:1.27.2
 
@@ -43,7 +43,7 @@ help: ## This help.
 build: build-ui ## Build the avatar server binary, with embedded static html files
 	go build -o dist/avatar cmd/avatar/main.go 
 
-build-docker: ## Build docker image
+build-docker: ## Build docker image - multi platform
 	docker build --no-cache  --build-arg BUILD_VER=$(BUILD_VER) $(MULTI_PLATFORM_DOCKER) -t $(REPO)/$(APP_NAME) -f deployment/Dockerfile .
 
 build-ui: ## build ui image, and copy distribution file to ./ui folder
@@ -63,12 +63,15 @@ deploy-latest: ## deploy current tag as latest
 
 vendor: ## go vendor and tidy
 # 	go get -u ./...
-	go get -u github.com/binuud/avatar-conscious
+#	go get -u github.com/binuud/avatar-conscious@69e1b21
 	go mod tidy
 	go mod vendor	
 
 run: ## Run server, UI accessible in http://localhost:9080/
 	./scripts/runAvatar.sh
+
+run-container: ## Run the docker image
+	docker run --rm -it -v ./dataVolume:/dataVolume -e FILE_STORE_PATH=/dataVolume -p 9090:9090 -p 9080:9080 $(REPO)/$(APP_NAME) 
 
 test-dist-binary: ## Run the distribution binary, UI accessible in http://localhost:9080/
 	./scripts/runAvatarBinary.sh

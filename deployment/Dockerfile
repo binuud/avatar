@@ -17,19 +17,25 @@ RUN addgroup -S nonroot -g 10001 && adduser -S nonroot -G nonroot -u 10001
 RUN mkdir /build
 COPY ./ /build/
 
-## For mounting config files on distroless containers
-RUN mkdir /configs
-RUN mkdir /data
+## For mounting dataVolume files on distroless containers
+RUN mkdir -p /dataVolume/avatars
+RUN mkdir -p /dataVolume/avatarStore
+RUN mkdir -p /dataVolume/configs
+RUN mkdir -p /dataVolume/memories
+RUN mkdir -p /dataVolume/static/avatarStore
+RUN mkdir -p /dataVolume/static/gen/images
+RUN mkdir -p /dataVolume/static/gen/tts
+RUN mkdir -p /dataVolume/uploads
 
 WORKDIR /build
 
 ENV GO111MODULE=auto
 
-# Build Avatar - AI agent harness for conscious Avatars
-RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build  -o watchDog cmd/avatar/main.go
+# Build Avatar - The harness of life
+# mark an env variable buildEnv as docker, so avatar knows, its running within a container
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -tags docker -ldflags="-w -s -X main.buildEnv=docker" -o avatar cmd/avatar/main.go
 
-#----------------------------------------------------------------------------------------------
-
+##----------------------------------------------------------------------------------------------
 ## Final Image
 FROM scratch
 
@@ -37,7 +43,6 @@ LABEL maintainer="Binu Udayakumar"
 
 # Copy the compiled certificate bundle from the builder stage
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
-
 
 ## HTTP Port
 EXPOSE 9080
@@ -56,8 +61,7 @@ USER nonroot:nonroot
 
 ## create a directory called dataVolume, using busybox
 ## since scratch images do not allow for directory creation
-COPY --from=builder --chown=nonroot:nonroot /configs /configs
-COPY --from=builder --chown=nonroot:nonroot /data /data
+COPY --from=builder --chown=nonroot:nonroot /dataVolume /dataVolume
 # copy compiled app
 COPY --from=builder --chown=nonroot:nonroot /build/avatar /avatar
 
