@@ -39,10 +39,9 @@ outdir/*
 dataVolume/avatar/life-*
 dataVolume/avatarStore/life-*
 dataVolume/configs/*
-dataVolume/gen/*
 dataVolume/memories/*
 dataVolume/sampleImages/*
-dataVolume/static/*
+dataVolume/static/gen/*
 dataVolume/uploads/*
 
 dist/
