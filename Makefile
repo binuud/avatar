@@ -69,7 +69,7 @@ copy-avatars: ## copy avatars from conscious project
 
 vendor: ## go vendor and tidy
 # 	go get -u ./...
-	go get -u github.com/binuud/avatar-conscious@f639512
+	go get -u github.com/binuud/avatar-conscious@24cd8db
 	go mod tidy
 	go mod vendor	
 
