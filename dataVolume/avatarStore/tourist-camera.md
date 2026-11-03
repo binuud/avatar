@@ -8,8 +8,8 @@ triggers:
 ui:  
   uuid: ''
   name: First Pane
-  description: Country Guesser
-  title: I can guess your country
+  description: WebCamera
+  title: Tourist Photographer
   components:
   - id: webcamview
     class: ''
@@ -35,18 +35,26 @@ ui:
     type: PLAINTEXT  
 ---
 
-# Camera Describer
+# Tourist Photographer
 
-## Step 1: Launch an Avatar UI webcamera interface.
+## Step 1:
+
+```Description
+Launch an Avatar UI webcamera interface.
+```
 
 Use the following prompt, to launch ui with webcamera
 ```prompt
 Launch an Avatar UI interface, and get an image from the webcamera, that will be used by LLM to create a tourist photo
 ```
 
-## Step 2: Generate an image using the image from web camera as reference
+## Step 2:
+
+```Description
+Generate an image using the image from web camera as reference
+```
 
 Use the following prompt to describe the image
 ```prompt
-Create an image, using the image of the person from webcamera as reference, the image filename is given in the context, the person should be standing facing the camera, in front of a famouse tourist place.
+Edit the given image, remove the background. Then create a new image, using the image of the person from webcamera as reference, the image filename is given in the context, the person should be standing facing the camera, in front of a place like any of the seven wonders, a beach, big cities, river front. Choose a place at random. Style the clothing depending on the tourist place. Do not alter the persons skin tone or facial features.
 ```
