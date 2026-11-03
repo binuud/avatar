@@ -15,6 +15,7 @@ import (
 	pbConscious "github.com/binuud/avatar-conscious/gen/go/v1/conscious"
 	pbSettings "github.com/binuud/avatar-conscious/gen/go/v1/settings"
 	"github.com/binuud/avatar-conscious/pkg/bootstrap"
+	"github.com/binuud/avatar-conscious/pkg/servers"
 	"github.com/binuud/avatar-conscious/pkg/servers/avatarServer"
 	llmProxyServer "github.com/binuud/avatar-conscious/pkg/servers/llmProxyServer"
 	"github.com/binuud/avatar-conscious/pkg/servers/staticFileServer"
@@ -197,7 +198,7 @@ func main() {
 	bootstrap.Bootstrap(buildEnv)
 
 	go func() {
-		bootstrap.Bootstrap_GRPC_Services(*server_grpc_port)
+		servers.Bootstrap_GRPC_Services(*server_grpc_port)
 	}()
 
 	runHtppServer()
