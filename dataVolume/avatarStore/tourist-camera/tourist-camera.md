@@ -5,34 +5,6 @@ image: /static/avatarStore/tourist-camera.png
 description: This is a reference demo, to showcase webcamera image piple line to agent. It takes a photo of a person using webcamera, and generates a tourist photo of random place.
 triggers:
   - webcam
-ui:  
-  uuid: ''
-  name: First Pane
-  description: WebCamera
-  title: Tourist Photographer
-  components:
-  - id: webcamview
-    class: ''
-    label: WebCamera
-    value: ''
-    placeHolder: ''
-    help: ''
-    style: ''
-    width: 100
-    rows: 0
-    cols: 0
-    type: WEBCAM
-  - id: ''
-    class: ''
-    label: ''
-    value: Avatar will try to generate a tourist photo of you.
-    placeHolder: ''
-    help: ''
-    style: ''
-    width: 100
-    rows: 0
-    cols: 0
-    type: PLAINTEXT  
 ---
 
 # Tourist Photographer
@@ -45,7 +17,7 @@ Launch an Avatar UI webcamera interface.
 
 Use the following prompt, to launch ui with webcamera
 ```prompt
-Launch an Avatar UI interface, and get an image from the webcamera, that will be used by LLM to create a tourist photo
+Launch an Avatar UI interface with id web-camera, and get an image from the webcamera, that will be used by LLM to create a tourist photo
 ```
 
 ## Step 2:

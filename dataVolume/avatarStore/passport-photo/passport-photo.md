@@ -5,34 +5,6 @@ image: /static/avatarStore/passport-photo.png
 description: This is a reference demo, to showcase webcamera, external utility pipeline.
 triggers:
   - webcam
-ui:  
-  uuid: ''
-  name: First Pane
-  description: Passport Photo Maker
-  title: Passport Photo Maker
-  components:
-  - id: webcamview
-    class: ''
-    label: WebCamera
-    value: ''
-    placeHolder: ''
-    help: ''
-    style: ''
-    width: 100
-    rows: 0
-    cols: 0
-    type: WEBCAM
-  - id: ''
-    class: ''
-    label: ''
-    value: Avatar will try to generate a passport style photo of you.
-    placeHolder: ''
-    help: ''
-    style: ''
-    width: 100
-    rows: 0
-    cols: 0
-    type: PLAINTEXT  
 ---
 # Passport Photo Maker
 
@@ -44,7 +16,7 @@ Launch an Avatar UI webcamera interface.
 
 Use the following prompt, to launch ui with webcamera
 ```prompt
-Launch an Avatar UI interface, and get an image from the webcamera, that will be used by LLM to create a passport style photo
+Launch an Avatar UI interface with id web-camera, and get an image from the webcamera, that will be used by LLM to create a passport style photo
 ```
 
 ## Step 2: 
