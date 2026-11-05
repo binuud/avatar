@@ -63,13 +63,14 @@ deploy-latest: ## deploy current tag as latest
 
 copy-avatars: ## copy avatars from conscious project
 ## temporary fix
+	rm -rf ./dataVolume/avatarStore/*
 	cp ../avatar-conscious/dataVolume/avatars/* ./dataVolume/avatars/
-	cp ../avatar-conscious/dataVolume/avatarStore/* ./dataVolume/avatarStore/
+	cp -R ../avatar-conscious/dataVolume/avatarStore/* ./dataVolume/avatarStore/
 	cp ../avatar-conscious/dataVolume/static/avatarStore/* ./dataVolume/static/avatarStore/
 
 vendor: ## go vendor and tidy
 # 	go get -u ./...
-	go get -u github.com/binuud/avatar-conscious@24cd8db
+	go get -u github.com/binuud/avatar-conscious@4cd59b6
 	go mod tidy
 	go mod vendor	
 
