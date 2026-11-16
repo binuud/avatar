@@ -1,6 +1,6 @@
 # avatar
 
-[Documentation](https://binuud.com/docs/avatar)
+[Detailed Documentation](https://binuud.com/docs/avatar)
 
 Please refer to above link for the latest documentation.
 
@@ -85,28 +85,9 @@ make run
 ```
 (Tested and working on version 0.1.0)
 
-##### Supported Environment Variables
 
-* LLM_HOST - The LLM Host, the default value connects to port 11234 (mlx serve)
-* MQTT_HOST - Not required in this release
-* LLM_MODEL - The default LLM Model
-* IMAGE_MODEL - The default Image model
-* VISION_MODEL - The default vision model
-* FILE_STORE_PATH - The path where the memories, avatars, generated assets are stored
-* SERVABLE_DIRECTORY - The path from which static files can be served
+[Environment settings for various LLM vendors](./documentation/env-examples.md)
 
-Sample data for supported Environment variables
-```
-export LLM_HOST="http://localhost:11234"
-export MQTT_HOST="tcp://localhost:1883"
-
-export LLM_MODEL="lmstudio-community/Qwen3.5-9B-MLX-4bit"
-export IMAGE_MODEL="Runpod/FLUX.2-klein-4B-mflux-4bit"
-export VISION_MODEL="lmstudio-community/Qwen3.5-9B-MLX-4bit"
-
-export FILE_STORE_PATH=$PWD/dataVolume
-export SERVABLE_DIRECTORY=$PWD/dataVolume/static
-```
 
 ## Avatar Project Collection
 
@@ -121,5 +102,7 @@ Avatar is a collection of the below projects
 | Physical Plane  | MIT         | https://github.com/binuud/avatar-physical-plane           |
 
 
-## Credits
+## Further Documentation
+
+* [Environment settings and examples for various LLM vendors](./documentation/env-examples.md)
 

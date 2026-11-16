@@ -13,8 +13,8 @@ GITHUB_TOKEN=""
 REPO=binuud
 APP_NAME ?= avatar
 
-BUILD_VER ?= v0.1.2
-DOCKER_HUB_TAG ?= v0.1.2
+BUILD_VER ?= v0.1.3
+DOCKER_HUB_TAG ?= v0.1.3
 
 GOLANG_IMAGE=golang:1.27.2
 
@@ -63,14 +63,15 @@ deploy-latest: ## deploy current tag as latest
 
 copy-avatars: ## copy avatars from conscious project
 ## temporary fix
+	rm -rf ./dataVolume/avatars/*
 	rm -rf ./dataVolume/avatarStore/*
 	cp ../avatar-conscious/dataVolume/avatars/* ./dataVolume/avatars/
 	cp -R ../avatar-conscious/dataVolume/avatarStore/* ./dataVolume/avatarStore/
-	cp ../avatar-conscious/dataVolume/static/avatarStore/* ./dataVolume/static/avatarStore/
+	cp -R ../avatar-conscious/dataVolume/static/avatarStore/* ./dataVolume/static/avatarStore/
 
 vendor: ## go vendor and tidy
 # 	go get -u ./...
-	go get -u github.com/binuud/avatar-conscious@4cd59b6
+	go get -u github.com/binuud/avatar-conscious@1482e69
 	go mod tidy
 	go mod vendor	
 

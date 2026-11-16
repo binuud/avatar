@@ -34,9 +34,13 @@ import (
 //go:embed ui/*
 var embeddedFiles embed.FS
 
+// to know that the binary is running within a docker container
+var buildEnv = "local" // "local" - for normal builds || "docker" - for docker builds
+
 var (
 	server_grpc_port = flag.Int("grpc_port", 9090, "The Brain Backend Server GRPC port, no token required unsecured")
 	server_http_port = flag.Int("http_port", 9080, "The Brain Backend Server HTTP port, no token required unsecured")
+	verbose          = flag.Bool("v", false, "Enable verbose (debug) output")
 )
 
 var (
@@ -44,14 +48,6 @@ var (
 	commit  = "none"
 	date    = "unknown"
 )
-
-// type spaFileSystem struct {
-// 	baseFS    fs.FS
-// 	indexPath string
-// }
-
-// to know that the binary is running within a docker container
-var buildEnv = "local" // "local" - for normal builds || "docker" - for docker builds
 
 func serveUI() *http.ServeMux {
 
@@ -193,8 +189,17 @@ func runHtppServer() {
 }
 
 func main() {
+
+	flag.Parse()
+
+	if *verbose {
+		logrus.SetLevel(logrus.DebugLevel)
+	} else {
+		logrus.SetLevel(logrus.InfoLevel)
+	}
+
 	logrus.Println("Welcome to life")
-	logrus.Printf("My App %s, commit %s, built at %s", version, commit, date)
+	logrus.Printf("Avatar Version %s, Commit %s, Built at %s", version, commit, date)
 	bootstrap.Bootstrap(buildEnv)
 
 	go func() {

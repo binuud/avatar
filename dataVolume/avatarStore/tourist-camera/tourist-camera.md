@@ -2,7 +2,7 @@
 name: tourist-camera
 uuid: cf13858e-4e40-4f90-a792-ba5b09c63651
 image: /static/avatarStore/tourist-camera.png
-description: This is a reference demo, to showcase webcamera image piple line to agent. It takes a photo of a person using webcamera, and generates a tourist photo of random place.
+description: Sample Avatar, to showcase webcamera image piple line to agent. It takes a photo of a person using webcamera, and generates a tourist photo as per the users prompt.
 triggers:
   - webcam
 ---
@@ -15,18 +15,32 @@ triggers:
 Launch an Avatar UI webcamera interface.
 ```
 
-Use the following prompt, to launch ui with webcamera
 ```prompt
-Launch an Avatar UI interface with id web-camera, and get an image from the webcamera, that will be used by LLM to create a tourist photo
+Launch an Avatar UI interface with id "web-camera"
 ```
-
-## Step 2:
+## Step 2: 
 
 ```Description
-Generate an image using the image from web camera as reference
+Launch an Avatar UI select-place interface
+```
+
+```prompt
+Launch an Avatar UI interface, the ui interface id is : "select-place"
+```
+
+## Step 3:
+
+```Description
+Generate a tourist photograph using the image from web camera as reference, and tourist place as entered by the user
 ```
 
 Use the following prompt to describe the image
 ```prompt
-Edit the given image, remove the background. Then create a new image, using the image of the person from webcamera as reference, the image filename is given in the context, the person should be standing facing the camera, in front of a place like any of the seven wonders, a beach, big cities, river front. Choose a place at random. Style the clothing depending on the tourist place. Do not alter the persons skin tone or facial features.
+Edit the given image, using the image of the person from webcamera as reference, the image filename is given in the context. 
+Do not change the face of the person. 
+Do not alter the gender of the person.
+Do not change facial features of the person.
+Avoid nudity or exposing clothing.
+Change the background and surroundings as per the place mentioned in select-place-prompt in Step No.2.
+Style the clothing depending on the tourist place. 
 ```
