@@ -3,6 +3,7 @@ ui:
   name: web-camera
   description: WebCamera
   title: Magic Camera
+  showSubmit: false
   components:
   - id: webcamview
     class: ''
@@ -30,12 +31,13 @@ ui:
   name: get-prompt
   description: Get prompt from User
   title: Enter styles ideas and prompts
+  showSubmit: true
   components:
   - id: user-prompt
     class: ''
     label: User Prompt
     value: ''
-    placeHolder: Enter style keywords
+    placeHolder: Enter style keywords or prompt ideas to modify your image
     help: ''
     style: ''
     width: 100
@@ -45,7 +47,7 @@ ui:
   - id: ''
     class: ''
     label: ''
-    value: Avatar will use the style keywords to modify your image
+    value: Enter style keywords, like change Hairstyle, changing backgrounds, make animals appear near you, grow wings etc.
     placeHolder: ''
     help: ''
     style: ''
