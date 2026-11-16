@@ -2,9 +2,17 @@
 
 [Detailed Documentation](https://binuud.com/docs/avatar)
 
+![Avatar Demo](/documentation/assets/avatar-demo.gif)
+
 Please refer to above link for the latest documentation.
 
-ai life form, physical robot with integrated conscious, memory and communication
+Real World facing AI Agents, with memory, MCP Server Management, tool management. Tool whitelisting at agent level.
+
+* Build your own customer facing agents
+* Agents for Home Automation
+* Harness for Agents
+* MCP Server Manager
+* White list MCP Server Access at agent level
 
 Project status - open for alpha users
 
