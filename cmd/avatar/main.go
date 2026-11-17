@@ -13,6 +13,7 @@ import (
 
 	pbAvatar "github.com/binuud/avatar-conscious/gen/go/v1/avatar"
 	pbConscious "github.com/binuud/avatar-conscious/gen/go/v1/conscious"
+	pbMcp "github.com/binuud/avatar-conscious/gen/go/v1/mcpManager"
 	pbSettings "github.com/binuud/avatar-conscious/gen/go/v1/settings"
 	"github.com/binuud/avatar-conscious/pkg/bootstrap"
 	"github.com/binuud/avatar-conscious/pkg/servers"
@@ -139,6 +140,12 @@ func runHtppServer() {
 		log.Fatalln(err)
 	}
 
+	// mcp manager server
+	err = pbMcp.RegisterMCPManagerServiceHandler(ctx, gwMux, conn)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	// settings server
 	err = pbSettings.RegisterSettingsHandler(ctx, gwMux, conn)
 	if err != nil {
@@ -165,6 +172,7 @@ func runHtppServer() {
 	logrus.Infof("Server directory %s -> %s", "/api/", "conscious server")
 	logrus.Infof("Server directory %s -> %s", "/api/", "metrics server")
 	logrus.Infof("Server directory %s -> %s", "/api/", "avatar store server")
+	logrus.Debugf("Server directory %s -> %s", "/api/", "mcp manager server")
 	logrus.Infof("Server directory %s -> %s", "/api/", "settings server")
 
 	// Configure CORS options as needed
