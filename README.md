@@ -2,7 +2,7 @@
 
 [Detailed Documentation](https://binuud.com/docs/avatar)
 
-![Avatar Demo](/documentation/assets/avatar-demo.gif)
+![Avatar Demo](/documentation/assets/avatar-dress-try-on.gif)
 
 Please refer to above link for the latest documentation.
 
