@@ -13,8 +13,8 @@ GITHUB_TOKEN=""
 REPO=binuud
 APP_NAME ?= avatar
 
-BUILD_VER ?= v0.1.3
-DOCKER_HUB_TAG ?= v0.1.3
+BUILD_VER ?= v0.1.4
+DOCKER_HUB_TAG ?= v0.1.4
 
 GOLANG_IMAGE=golang:1.27.2
 
@@ -71,7 +71,7 @@ copy-avatars: ## copy avatars from conscious project
 
 vendor: ## go vendor and tidy
 # 	go get -u ./...
-	go get -u github.com/binuud/avatar-conscious@1482e69
+	go get -u github.com/binuud/avatar-conscious@4129558
 	go mod tidy
 	go mod vendor	
 
