@@ -14,7 +14,12 @@ Real World facing AI Agents, with memory, MCP Server Management, tool management
 * MCP Server Manager
 * White list MCP Server Access at agent level
 
+This is a multi repo project, Avatar is the packager for all the Avatar Sub Projects. See at the end of this file, for 
+all the sub project details.
+
 Project status - open for alpha users
+
+Remember to link local llm or external ai provider on the settings page.
 
 ## Install
 
