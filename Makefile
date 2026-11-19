@@ -13,8 +13,8 @@ GITHUB_TOKEN=""
 REPO=binuud
 APP_NAME ?= avatar
 
-BUILD_VER ?= v0.1.4
-DOCKER_HUB_TAG ?= v0.1.4
+BUILD_VER ?= v0.1.5
+DOCKER_HUB_TAG ?= v0.1.5
 
 GOLANG_IMAGE=golang:1.27.2
 
@@ -53,6 +53,7 @@ build-ui: ## build ui image, and copy distribution file to ./ui folder
 
 deploy: ## Deploy all images to docker hub
 	@echo "====================> Pushing image to dockerhub (PUBLIC) ."
+#	echo "$DOCKER_TOKEN" | docker login -u myuser --password-stdin
 ## @docker login --username=$(DOCKER_HUB_USER) --password="$(DOCKER_HUB_PASSWD)"
 	docker tag $(REPO)/${APP_NAME} $(REPO)/${APP_NAME}:$(DOCKER_HUB_TAG)
 	docker push $(REPO)/${APP_NAME}:$(DOCKER_HUB_TAG)
@@ -71,7 +72,7 @@ copy-avatars: ## copy avatars from conscious project
 
 vendor: ## go vendor and tidy
 # 	go get -u ./...
-	go get -u github.com/binuud/avatar-conscious@4129558
+	go get -u github.com/binuud/avatar-conscious@086a891
 	go mod tidy
 	go mod vendor	
 
@@ -90,9 +91,10 @@ test: ## Run tests
 release: ## for releasing the package
 ## comments for reference
 # git tag -a v0.1.0 -m "Release COMMENT"
-# git push origin [version]
+# git push -u origin [version]
 # delete:packages, project, repo, workflow, write:packages
-# export GITHUB_TOKEN="YOUR_GH_TOKEN" make release
+# export GITHUB_TOKEN="$(GITHUB_TOKEN)" make release
+# 	export GITHUB_TOKEN="$(GITHUB_TOKEN)" make release
 	ifndef GITHUB_TOKEN
 		$(error GITHUB_TOKEN is undefined)
 	endif

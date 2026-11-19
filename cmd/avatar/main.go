@@ -146,6 +146,12 @@ func runHtppServer() {
 		log.Fatalln(err)
 	}
 
+	// memoryServer
+	err = pbConscious.RegisterMemoryServiceHandler(ctx, gwMux, conn)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	// settings server
 	err = pbSettings.RegisterSettingsHandler(ctx, gwMux, conn)
 	if err != nil {
@@ -172,7 +178,8 @@ func runHtppServer() {
 	logrus.Infof("Server directory %s -> %s", "/api/", "conscious server")
 	logrus.Infof("Server directory %s -> %s", "/api/", "metrics server")
 	logrus.Infof("Server directory %s -> %s", "/api/", "avatar store server")
-	logrus.Debugf("Server directory %s -> %s", "/api/", "mcp manager server")
+	logrus.Infof("Server directory %s -> %s", "/api/", "mcp manager server")
+	logrus.Infof("Server directory %s -> %s", "/api/", "memory manager server")
 	logrus.Infof("Server directory %s -> %s", "/api/", "settings server")
 
 	// Configure CORS options as needed
