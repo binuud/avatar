@@ -13,8 +13,9 @@ GITHUB_TOKEN=""
 REPO=binuud
 APP_NAME ?= avatar
 
-BUILD_VER ?= v0.1.5
-DOCKER_HUB_TAG ?= v0.1.5
+CONSCIOUS_SERVER_BUILD_HASH = ce81a50
+BUILD_VER ?= v0.1.6
+DOCKER_HUB_TAG ?= $(BUILD_VER)
 
 GOLANG_IMAGE=golang:1.27.2
 
@@ -72,7 +73,7 @@ copy-avatars: ## copy avatars from conscious project
 
 vendor: ## go vendor and tidy
 # 	go get -u ./...
-	go get -u github.com/binuud/avatar-conscious@086a891
+	go get -u github.com/binuud/avatar-conscious@$(CONSCIOUS_SERVER_BUILD_HASH)
 	go mod tidy
 	go mod vendor	
 
@@ -83,7 +84,8 @@ run-container: ## Run the docker image
 	docker run --rm -it -v ./dataVolume:/dataVolume -e FILE_STORE_PATH=/dataVolume -p 9090:9090 -p 9080:9080 $(REPO)/$(APP_NAME) 
 
 test-dist-binary: ## Run the distribution binary, UI accessible in http://localhost:9080/
-	./scripts/runAvatarBinary.sh
+	./dist/avatar_darwin_arm64_v8.0/avatar
+#./scripts/runAvatarBinary.sh
 
 test: ## Run tests
 	go test -v ./pkg/...	

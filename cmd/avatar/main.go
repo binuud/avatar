@@ -41,7 +41,7 @@ var buildEnv = "local" // "local" - for normal builds || "docker" - for docker b
 var (
 	server_grpc_port = flag.Int("grpc_port", 9090, "The Brain Backend Server GRPC port, no token required unsecured")
 	server_http_port = flag.Int("http_port", 9080, "The Brain Backend Server HTTP port, no token required unsecured")
-	verbose          = flag.Bool("v", false, "Enable verbose (debug) output")
+	verbose          = flag.Bool("v", true, "Enable verbose (debug) output")
 )
 
 var (
