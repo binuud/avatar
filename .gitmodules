@@ -1,0 +1,3 @@
+[submodule "avatar-store"]
+	path = avatar-store
+	url = https://github.com/binuud/avatar-store.git

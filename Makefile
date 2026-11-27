@@ -13,8 +13,8 @@ GITHUB_TOKEN=""
 REPO=binuud
 APP_NAME ?= avatar
 
-CONSCIOUS_SERVER_BUILD_HASH = ce81a50
-BUILD_VER ?= v0.1.6
+CONSCIOUS_SERVER_BUILD_HASH = d510aee
+BUILD_VER ?= v0.1.7
 DOCKER_HUB_TAG ?= $(BUILD_VER)
 
 GOLANG_IMAGE=golang:1.27.2
@@ -102,7 +102,7 @@ release: ## for releasing the package
 	endif
 	goreleaser release --clean
 
-release-check: ## run release build, but do not publish
+release-check: build-ui vendor ## run release build, but do not publish
 	rm -rf dist/*
 	goreleaser check
 	goreleaser release --snapshot --clean	
@@ -110,3 +110,7 @@ release-check: ## run release build, but do not publish
 
 run-mock-server: ## run the mock server, mocks http get, post requests, without an actual server
 	go run github.com/smeshkov/gomock/cmd/app@latest -mock ./mockServer/mock.json	
+
+run-docker: ## run docker container
+	docker run --rm -v ./dataVolume:/dataVolume \
+  -p 9090:9090 -p 9080:9080 binuud/avatar:latest	
