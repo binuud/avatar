@@ -1,0 +1,33 @@
+configs:
+  - uuid: 3aa138c7-b780-4399-8e80-40720ddefdfa
+    name: astro-server
+    mcpType: MCP_TYPE_STDIO
+    command: mcp-astro-server
+    enabled: true
+  - uuid: 06292fc8-f3a3-4dff-aa73-173dc16ee5ac
+    name: get-weather
+    mcpType: MCP_TYPE_STDIO
+    command: mcp-weather-server
+    enabled: true
+  - uuid: b844643d-8e7a-4c28-85b0-7bee892eb190
+    name: google-calendar-mcp
+    mcpType: MCP_TYPE_HTTP
+    url: https://calendarmcp.googleapis.com/mcp/v1
+  - uuid: b0422603-f69b-4109-ae17-97c3388b6de6
+    name: greet-server
+    mcpType: MCP_TYPE_STDIO
+    command: mcp-greet-server
+    enabled: true
+  - uuid: 4bd5fbae-d018-4e22-8c55-0a8f54f62f4a
+    name: mock-server
+    url: http://localhost:1080/mockserver/mcp
+  - uuid: cfaf9658-99b5-4894-9e2e-eded51e71f38
+    name: yahoo-finance
+    mcpType: MCP_TYPE_HTTP
+    url: https://gateway.mcpservers.org/yahoo-finance/mcp
+  - uuid: 7d2fb062-a376-4d94-bf32-6c51442d1fe5
+    name: yolo-mcp
+    mcpType: MCP_TYPE_HTTP
+    url: http://localhost:8000/mcp
+    enabled: true
+    authType: MCP_AUTH_TYPE_NONE

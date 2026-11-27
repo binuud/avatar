@@ -2,18 +2,25 @@
 
 ### Supported Environment Variables
 
-* LLM_HOST - The LLM Host, the default value connects to port 11234 (mlx serve)
-* MQTT_HOST - Not required in this release
-* LLM_MODEL - The default LLM Model
-* IMAGE_MODEL - The default Image model
-* VISION_MODEL - The default vision model
-* FILE_STORE_PATH - The path where the memories, avatars, generated assets are stored
-* SERVABLE_DIRECTORY - The path from which static files can be served
+- LLM_HOST - The LLM Host, the default value connects to port 11234 (mlx serve)
+- MQTT_HOST - Not required in this release
+- LLM_MODEL - The default LLM Model
+- IMAGE_MODEL - The default Image model
+- VISION_MODEL - The default vision model
+- FILE_STORE_PATH - The path where the memories, avatars, generated assets are stored
+- SERVABLE_DIRECTORY - The path from which static files can be served
 
 ## Env variables for file paths
+
 ```bash
 export FILE_STORE_PATH=$PWD/dataVolume
 export SERVABLE_DIRECTORY=$PWD/dataVolume/static
+```
+
+Internal, when running via docker
+
+```bash
+export BUILD_ENV="docker"
 ```
 
 Sample data for supported Environment variables
